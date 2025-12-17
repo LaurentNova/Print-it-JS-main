@@ -27,3 +27,16 @@ leftArrow.addEventListener("click", () => {
 rightArrow.addEventListener("click", () => {
 	console.log("clic droit");
 });
+
+const dotsContainer = document.querySelector(".dots");
+
+slides.forEach((slide, index) => {
+  const dot = document.createElement("div");
+  dot.classList.add("dot");
+
+  if (index === 0) {
+    dot.classList.add("dot_selected");
+  }
+
+  dotsContainer.appendChild(dot);
+});
