@@ -17,26 +17,49 @@ const slides = [
 	}
 ]
 
+/* Ajout des flèches de navigation dans le carroussel et gestion du clic */
 const leftArrow = document.querySelector(".arrow_left");
 const rightArrow = document.querySelector(".arrow_right");
 
-leftArrow.addEventListener("click", () => {
-	console.log("clic gauche");
-});
 
-rightArrow.addEventListener("click", () => {
-	console.log("clic droit");
-});
-
+/* Ajout des bullet points dans le carroussel*/
 const dotsContainer = document.querySelector(".dots");
 
 slides.forEach((slide, index) => {
-  const dot = document.createElement("div");
-  dot.classList.add("dot");
+	const dot = document.createElement("div");
+	dot.classList.add("dot");
 
-  if (index === 0) {
-    dot.classList.add("dot_selected");
-  }
+	if (index === 0) {
+		dot.classList.add("dot_selected");
+	}
 
-  dotsContainer.appendChild(dot);
+	dotsContainer.appendChild(dot);
+});
+
+/*Mise à jour images, textes et bullets*/
+
+const bannerImg = document.querySelector(".banner-img");
+const bannerText = document.querySelector("#banner p");
+const dots = document.querySelectorAll(".dot");
+
+let currentIndex = 0;
+
+function updateBanner() {
+  bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
+  bannerText.innerHTML = slides[currentIndex].tagLine;
+
+  dots.forEach((dot) => dot.classList.remove("dot_selected"));
+  dots[currentIndex].classList.add("dot_selected");
+}
+
+updateBanner();
+
+leftArrow.addEventListener("click", () => {
+  currentIndex--;
+  updateBanner();
+});
+
+rightArrow.addEventListener("click", () => {
+  currentIndex++;
+  updateBanner();
 });
