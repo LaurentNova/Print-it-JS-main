@@ -55,11 +55,19 @@ function updateBanner() {
 updateBanner();
 
 leftArrow.addEventListener("click", () => {
-  currentIndex--;
+  if (currentIndex === 0) {
+    currentIndex = slides.length - 1;
+  } else {
+    currentIndex--;
+  }
   updateBanner();
 });
 
 rightArrow.addEventListener("click", () => {
-  currentIndex++;
+  if (currentIndex === slides.length - 1) {
+    currentIndex = 0;
+  } else {
+    currentIndex++;
+  }
   updateBanner();
 });
