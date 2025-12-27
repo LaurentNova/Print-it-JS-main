@@ -20,60 +20,22 @@ const slides = [
 ];
 
 const banner = document.querySelector("#banner");
+const leftArrow = banner.querySelector(".arrow_left");
+const rightArrow = banner.querySelector(".arrow_right");
+const bannerText = banner.querySelector("p");
+const dotsContainer = banner.querySelector(".dots");
+const bannerImg = banner.querySelector(".banner-img")
+
+console.log(dotsContainer);
 
 let currentIndex = 0;
 
-let leftArrow = null;
-let rightArrow = null;
-let dotsContainer = null;
-let bannerImg = null;
-let bannerText = null;
+//let dotsContainer = null;
 let dots = [];
-
-/*Init DOM  */
-const initDOM = () => {
-	if (!banner) {
-		throw new Error("Élément #banner introuvable.");
-	}
-
-	// Flèches (doivent déjà exister selon ton HTML)
-	leftArrow = banner.querySelector(".arrow_left");
-	rightArrow = banner.querySelector(".arrow_right");
-	if (!leftArrow || !rightArrow) {
-		throw new Error("Flèches .arrow_left / .arrow_right introuvables.");
-	}
-
-	// <p> pour la tagline
-	bannerText = banner.querySelector("p");
-	if (!bannerText) {
-		bannerText = document.createElement("p");
-		banner.prepend(bannerText);
-	}
-
-	// Conteneur .dots
-	dotsContainer = banner.querySelector(".dots");
-	if (!dotsContainer) {
-		dotsContainer = document.createElement("div");
-		dotsContainer.classList.add("dots");
-		banner.appendChild(dotsContainer);
-	}
-
-	// Image du banner (
-	bannerImg = banner.querySelector(".banner-img");
-
-	if (!bannerImg) {
-		bannerImg = document.createElement("img");
-		bannerImg.classList.add("banner-img");
-		bannerImg.alt = "";
-
-		banner.insertBefore(bannerImg, leftArrow);
-	}
-
-};
 
 /*Dots*/
 const createDots = () => {
-	dotsContainer.innerHTML = "";
+	//dotsContainer.innerHTML = "";
 
 	slides.forEach((_, index) => {
 		const dot = document.createElement("div");
@@ -89,6 +51,7 @@ const createDots = () => {
 	});
 
 	dots = Array.from(dotsContainer.querySelectorAll(".dot"));
+	//const dots = dotsContainer.querySelectorAll(".dot");
 };
 
 /* Mise à jour UI */
@@ -102,27 +65,19 @@ const updateBanner = () => {
 };
 
 /*Navigation */
-const goPrev = () => {
+
+leftArrow.addEventListener("click", () => {
 	currentIndex = (currentIndex - 1 + slides.length) % slides.length;
 	updateBanner();
-};
-
-const goNext = () => {
+});
+rightArrow.addEventListener("click", () =>{
 	currentIndex = (currentIndex + 1) % slides.length;
 	updateBanner();
-};
-
-const bindEvents = () => {
-	leftArrow.addEventListener("click", goPrev);
-	rightArrow.addEventListener("click", goNext);
-};
+});
 
 /* Boot */
 const init = () => {
-	initDOM();
-	createDots();
-	bindEvents();
-	updateBanner(); 
+	createDots();	
+	updateBanner();
 };
-
-document.addEventListener("DOMContentLoaded", init);
+init();
